@@ -1,9 +1,12 @@
+import Link from "next/link";
 import SignOutButton from "./SignOutButton";
 
 export default function Header() {
   return (
-    <div className="bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-600 flex items-center py-2 justify-around">
-      <h1 className="text-white text-4xl">Posts</h1>
+    <div className="fixed left-0 top-0 z-20 flex h-16 w-full items-center justify-around border-b border-gray-600 bg-gray-900 py-2">
+      <Link href="/">
+        <h1 className="text-4xl text-white">Posts</h1>
+      </Link>
       <SignOutButton />
     </div>
   );
