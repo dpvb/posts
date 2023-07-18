@@ -32,19 +32,6 @@ export async function POST(request: Request) {
     return NextResponse.json(like, { status: 201 });
 }
 
-export async function GET(request: Request) {
-    const { searchParams } = new URL(request.url);
-    const postId = Number(searchParams.get("postId"));
-    const likes = await prisma.like.findMany({
-        where: {
-            postId: postId,
-        },
-    });
-
-    return NextResponse.json(likes, { status: 200 });
-    console.log(likes);
-}
-
 export async function DELETE(request: Request) {
     const session = await getServerSession(authOptions);
     if (!session || !session.user) {

@@ -4,26 +4,21 @@ import { Like } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
-export default function PostLike({ postId }: { postId: number }) {
-    const [likes, setLikes] = useState([]);
+export default function PostLike({
+    likes,
+    postId,
+}: {
+    likes: Like[];
+    postId: number;
+}) {
     const [liked, setLiked] = useState(false);
     const { data: session } = useSession();
 
     useEffect(() => {
-        console.log(`FETCHING LIKES FOR POST: ${postId}`);
-        fetch(`/api/like?postId=${postId}`, {
-            method: "GET",
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                setLikes(data);
-                setLiked(
-                    data.some((like: Like) => like.userId === session?.user?.id)
-                );
-            });
+        setLiked(likes.some((like) => like.userId === session?.user?.id));
+    }, [likes]);
 
-        // setLiked(likes.some((like: Like) => like.userId === session?.user?.id));
-    }, [session, liked]);
+    const numLikes = likes.length;
 
     const handleLikePress = async (
         event: React.MouseEvent<HTMLButtonElement>
@@ -50,7 +45,7 @@ export default function PostLike({ postId }: { postId: number }) {
             <button onClick={handleLikePress} className="bg-blue-500">
                 {!liked ? "Like" : "Dislike"}
             </button>
-            <div className="text-sm">{likes.length} Likes</div>
+            <div className="text-sm">{numLikes} Likes</div>
         </div>
     );
 }

@@ -17,6 +17,7 @@ export async function GET(req: NextRequest) {
             },
             include: {
                 author: true,
+                likes: true,
             },
         });
 

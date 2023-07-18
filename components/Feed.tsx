@@ -1,6 +1,6 @@
 "use client";
 
-import { Post, User, Like } from "@prisma/client";
+import { Post, User } from "@prisma/client";
 import React, { useEffect, useMemo, useRef } from "react";
 import { useInfiniteQuery } from "react-query";
 import { useIntersection } from "@mantine/hooks";
