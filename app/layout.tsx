@@ -1,6 +1,7 @@
 import AuthProvider from "@/components/AuthProvider";
 import "./globals.css";
 import type { Metadata } from "next";
+import QueryProvider from "@/components/QueryProvider";
 
 export const metadata: Metadata = {
     title: "Posts",
@@ -14,9 +15,11 @@ export default function RootLayout({
 }) {
     return (
         <AuthProvider>
-            <html lang="en">
-                <body className={"bg-gray-900"}>{children}</body>
-            </html>
+            <QueryProvider>
+                <html lang="en">
+                    <body className={"bg-gray-900"}>{children}</body>
+                </html>
+            </QueryProvider>
         </AuthProvider>
     );
 }

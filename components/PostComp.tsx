@@ -1,5 +1,6 @@
 import { Post, User } from "@prisma/client";
 import Image from "next/image";
+import formatTimeString from "@/lib/utils";
 
 export default function PostComp({ post }: { post: Post & { author: User } }) {
     return (
@@ -14,9 +15,7 @@ export default function PostComp({ post }: { post: Post & { author: User } }) {
                 />
                 <h3 className="text-lg">{post.author.name}</h3>
                 <h3 className="text-xs italic text-gray-400">
-                    {post.createdAt.toLocaleTimeString() +
-                        " • " +
-                        post.createdAt.toDateString()}
+                    {formatTimeString(new Date(post.createdAt))}
                 </h3>
             </div>
             <pre className="overflow-auto whitespace-pre-wrap font-sans">
