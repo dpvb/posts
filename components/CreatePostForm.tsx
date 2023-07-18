@@ -45,7 +45,7 @@ export default function CreatePostForm() {
                         value={text}
                         onInput={handleInput}
                         maxLength={characterLimit}
-                        className="scrollbar-thin max-h-[400px] w-[500px] resize-none bg-inherit text-gray-200 outline-none"
+                        className="scrollbar-thin max-h-[400px] w-[calc(100vw-100px)] resize-none bg-inherit text-gray-200 outline-none md:w-[500px]"
                     />
                     <p className="text-right text-gray-400">
                         {text.length}/{characterLimit}
@@ -60,7 +60,7 @@ export default function CreatePostForm() {
                         Back
                     </button>
 
-                    <button className="mr-4 rounded-md bg-blue-500 px-6 py-1 text-lg text-white">
+                    <button className=" rounded-md bg-blue-500 px-6 py-1 text-lg text-white">
                         Post
                     </button>
                 </div>
