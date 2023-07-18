@@ -15,24 +15,11 @@ export default async function Home() {
         redirect("/login");
     }
 
-    // const posts = await prisma.post.findMany({
-    //     include: {
-    //         author: true,
-    //     },
-    //     orderBy: {
-    //         createdAt: "desc",
-    //     },
-    // });
-
     return (
         <main className="mt-20 flex flex-col items-center">
             <CreatePostButton />
             <div className="mt-4 flex flex-col gap-4">
                 <Feed />
-
-                {/* {posts.map((post) => {
-                    return <PostComp key={post.id} post={post} />;
-                })} */}
             </div>
         </main>
     );
