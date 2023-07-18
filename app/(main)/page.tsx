@@ -5,7 +5,7 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 import Header from "@/components/Header";
 import CreatePostButton from "@/components/CreatePostButton";
 import { prisma } from "@/lib/prisma";
-import Post from "@/components/Post";
+import PostComp from "@/components/PostComp";
 
 export default async function Home() {
     const session = await getServerSession(authOptions);
@@ -26,9 +26,11 @@ export default async function Home() {
     return (
         <main className="mt-20 flex flex-col items-center">
             <CreatePostButton />
-            {posts.map((post) => {
-                return <Post key={post.id} post={post} />;
-            })}
+            <div className="mt-4 flex flex-col gap-4">
+                {posts.map((post) => {
+                    return <PostComp key={post.id} post={post} />;
+                })}
+            </div>
         </main>
     );
 }

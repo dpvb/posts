@@ -1,7 +1,30 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+
+export async function GET(req: NextRequest) {
+    const page = req.nextUrl.searchParams.get("page");
+    const pageSize = 10;
+    const offset = (Number(page) - 1) * pageSize;
+
+    try {
+        const posts = await prisma.post.findMany({
+            take: pageSize,
+            skip: offset,
+            orderBy: {
+                createdAt: "desc",
+            },
+            include: {
+                author: true,
+            },
+        });
+
+        return NextResponse.json(posts, { status: 200 });
+    } catch (error) {
+        return NextResponse.json(error, { status: 500 });
+    }
+}
 
 export async function POST(request: Request) {
     const session = await getServerSession(authOptions);

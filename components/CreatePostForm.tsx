@@ -1,13 +1,18 @@
 "use client";
 
-import { prisma } from "@/lib/prisma";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-import { useSession } from "next-auth/react";
 
 export default function CreatePostForm() {
+    const characterLimit: number = 250;
     const router = useRouter();
     const [text, setText] = useState("");
+
+    const handleInput = (event: React.FormEvent<HTMLTextAreaElement>) => {
+        setText(event.currentTarget.value);
+        event.currentTarget.style.height = "auto";
+        event.currentTarget.style.height = `${event.currentTarget.scrollHeight}px`;
+    };
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -34,19 +39,17 @@ export default function CreatePostForm() {
                         Create a Post
                     </h1>
                 </div>
-                <div className="p-6 pt-0">
+                <div className="px-6 pb-2 pt-0">
                     <textarea
                         placeholder="Write something here"
                         value={text}
-                        onInput={(
-                            event: React.FormEvent<HTMLTextAreaElement>
-                        ) => {
-                            setText(event.currentTarget.value);
-                            event.currentTarget.style.height = "auto";
-                            event.currentTarget.style.height = `${event.currentTarget.scrollHeight}px`;
-                        }}
+                        onInput={handleInput}
+                        maxLength={characterLimit}
                         className="scrollbar-thin max-h-[400px] w-[500px] resize-none bg-inherit text-gray-200 outline-none"
                     />
+                    <p className="text-right text-gray-400">
+                        {text.length}/{characterLimit}
+                    </p>
                 </div>
                 <div className="flex justify-center gap-10 border-t border-solid border-gray-600 py-4">
                     <button
