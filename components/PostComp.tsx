@@ -3,11 +3,7 @@ import Image from "next/image";
 import formatTimeString from "@/lib/utils";
 import PostLike from "./PostLike";
 
-export default function PostComp({
-    post,
-}: {
-    post: Post & { author: User; likes: Like[] };
-}) {
+export default function PostComp({ post }: { post: Post & { author: User } }) {
     return (
         <div className="mx-auto flex w-11/12 flex-col rounded-md border border-solid border-gray-600 bg-gray-800 p-3 text-white md:w-[540px]">
             <div className="flex items-center gap-2">
@@ -23,7 +19,7 @@ export default function PostComp({
             <pre className="overflow-auto whitespace-pre-wrap font-sans">
                 {post.content}
             </pre>
-            <PostLike likes={post.likes} postId={post.id} />
+            <PostLike postId={post.id} />
             <p className="mt-1 text-xs italic text-gray-400">
                 {formatTimeString(new Date(post.createdAt))}
             </p>
