@@ -20,7 +20,7 @@ export default function PostComp({
                 />
                 <h3 className="text-lg">{post.author.name}</h3>
             </div>
-            <pre className="my-2 overflow-auto whitespace-pre-wrap font-sans">
+            <pre className="overflow-auto whitespace-pre-wrap font-sans">
                 {post.content}
             </pre>
             <PostLike likes={post.likes} postId={post.id} />
