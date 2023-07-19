@@ -5,6 +5,7 @@ import React, { useEffect, useMemo, useRef } from "react";
 import { useInfiniteQuery } from "react-query";
 import { useIntersection } from "@mantine/hooks";
 import PostComp from "./PostComp";
+import Link from "next/link";
 
 interface PostType extends Post {
     author: User;
