@@ -11,41 +11,45 @@ export default function PostLike({
     likes: Like[];
     postId: number;
 }) {
+    const [numLikes, setNumLikes] = useState(likes.length);
     const [liked, setLiked] = useState(false);
     const { data: session } = useSession();
 
     useEffect(() => {
         setLiked(likes.some((like) => like.userId === session?.user?.id));
-    }, [likes]);
-
-    const numLikes = likes.length;
+    }, []);
 
     const handleLikePress = async (
         event: React.MouseEvent<HTMLButtonElement>
     ) => {
         if (liked) {
-            const response = await fetch("/api/like", {
+            fetch("/api/like", {
                 method: "DELETE",
                 body: JSON.stringify({ postId: postId }),
             });
-            const data = await response.json();
             setLiked(false);
+            setNumLikes((prevLikes) => prevLikes - 1);
         } else {
-            const response = await fetch("/api/like", {
+            fetch("/api/like", {
                 method: "POST",
                 body: JSON.stringify({ postId: postId }),
             });
-            const data = await response.json();
             setLiked(true);
+            setNumLikes((prevLikes) => prevLikes + 1);
         }
     };
 
     return (
-        <div className="flex items-center gap-4">
-            <button onClick={handleLikePress} className="bg-blue-500">
-                {!liked ? "Like" : "Dislike"}
+        <div className="flex items-center gap-1">
+            <button
+                onClick={handleLikePress}
+                className={`${
+                    liked ? "text-blue-400" : "text-gray-400"
+                } flex items-center gap-1`}
+            >
+                <span className={`inline-block text-2xl`}>♥</span>
+                <span className="inline-block text-sm">{numLikes}</span>
             </button>
-            <div className="text-sm">{numLikes} Likes</div>
         </div>
     );
 }
