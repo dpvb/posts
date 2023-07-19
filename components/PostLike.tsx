@@ -17,7 +17,7 @@ export default function PostLike({
 
     useEffect(() => {
         setLiked(likes.some((like) => like.userId === session?.user?.id));
-    }, []);
+    }, [session]);
 
     const handleLikePress = async (
         event: React.MouseEvent<HTMLButtonElement>
