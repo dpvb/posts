@@ -1,11 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
 export default function CreatePostForm() {
     const characterLimit: number = 250;
-    const router = useRouter();
     const [text, setText] = useState("");
 
     const handleInput = (event: React.FormEvent<HTMLTextAreaElement>) => {
