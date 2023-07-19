@@ -54,7 +54,7 @@ export default function CreatePostForm() {
                 <div className="flex justify-center gap-10 border-t border-solid border-gray-600 py-4">
                     <button
                         type="button"
-                        onClick={() => router.push("/")}
+                        onClick={() => (window.location.href = "/")}
                         className="rounded-md bg-red-500 px-6 py-1 text-lg text-white"
                     >
                         Back
