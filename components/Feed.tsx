@@ -1,6 +1,6 @@
 "use client";
 
-import { Post, User } from "@prisma/client";
+import { Like, Post, User } from "@prisma/client";
 import React, { useEffect, useMemo, useRef } from "react";
 import { useInfiniteQuery } from "react-query";
 import { useIntersection } from "@mantine/hooks";
@@ -8,6 +8,7 @@ import PostComp from "./PostComp";
 
 interface PostType extends Post {
     author: User;
+    likes: Like[];
 }
 
 export default function Feed() {
