@@ -2,6 +2,8 @@ import { User, Post, Like } from "@prisma/client";
 import Image from "next/image";
 import formatTimeString from "@/lib/utils";
 import PostLike from "./PostLike";
+import Link from "next/link";
+import { BsLink45Deg } from "react-icons/bs";
 
 export default function PostComp({
     post,
@@ -20,10 +22,17 @@ export default function PostComp({
                 />
                 <h3 className="text-lg">{post.author.name}</h3>
             </div>
-            <pre className="overflow-auto whitespace-pre-wrap font-sans">
-                {post.content}
-            </pre>
-            <PostLike likes={post.likes} postId={post.id} />
+            <Link href={`/post/${post.id}`}>
+                <pre className="overflow-auto whitespace-pre-wrap font-sans">
+                    {post.content}
+                </pre>
+            </Link>
+            <div className="flex items-center gap-4">
+                <PostLike likes={post.likes} postId={post.id} />
+                <Link href={`/post/${post.id}`}>
+                    <BsLink45Deg className="text-2xl text-gray-400 transition-colors duration-100 hover:text-blue-400" />
+                </Link>
+            </div>
             <p className="mt-1 text-xs italic text-gray-400">
                 {formatTimeString(new Date(post.createdAt))}
             </p>
