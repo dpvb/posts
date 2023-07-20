@@ -46,7 +46,7 @@ export default function PostLike({
                 onClick={handleLikePress}
                 className={`${
                     liked ? "text-blue-400" : "text-gray-400"
-                } flex items-center gap-1`}
+                } flex items-center gap-1 transition-colors duration-100 hover:text-blue-400`}
             >
                 <span className={`inline-block text-2xl`}>♥</span>
                 <span className="inline-block text-sm">{numLikes}</span>
