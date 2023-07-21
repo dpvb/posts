@@ -3,6 +3,10 @@
 import { Like } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { Tooltip } from "react-tooltip";
+import LikesModal from "./LikesModal";
 
 export default function PostLike({
     likes,
@@ -14,6 +18,7 @@ export default function PostLike({
     const [numLikes, setNumLikes] = useState(likes.length);
     const [liked, setLiked] = useState(false);
     const { data: session } = useSession();
+    const [showLikesModal, setShowLikesModal] = useState(true);
 
     useEffect(() => {
         setLiked(likes.some((like) => like.userId === session?.user?.id));
@@ -42,15 +47,36 @@ export default function PostLike({
 
     return (
         <div className="flex items-center gap-1">
-            <button
-                onClick={handleLikePress}
-                className={`${
-                    liked ? "text-blue-400" : "text-gray-400"
-                } flex items-center gap-1 transition-colors duration-100 hover:text-blue-400`}
+            <a id="like-button">
+                <button
+                    onClick={handleLikePress}
+                    className={`${
+                        liked ? "text-blue-400" : "text-gray-400"
+                    } flex items-center gap-1 transition-colors duration-100 hover:text-blue-400`}
+                >
+                    {liked ? (
+                        <FavoriteIcon fontSize="small" />
+                    ) : (
+                        <FavoriteBorderIcon fontSize="small" />
+                    )}
+                    <span className="inline-block text-sm">{numLikes}</span>
+                </button>
+            </a>
+            <Tooltip
+                delayShow={500}
+                clickable
+                anchorSelect="#like-button"
+                place="left"
             >
-                <span className={`inline-block text-2xl`}>♥</span>
-                <span className="inline-block text-sm">{numLikes}</span>
-            </button>
+                <button onClick={() => setShowLikesModal(true)}>
+                    View Likes
+                </button>
+            </Tooltip>
+            <LikesModal
+                visible={showLikesModal}
+                close={() => setShowLikesModal(false)}
+                likes={likes}
+            />
         </div>
     );
 }
