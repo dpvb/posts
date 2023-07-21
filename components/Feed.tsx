@@ -7,9 +7,15 @@ import { useIntersection } from "@mantine/hooks";
 import PostComp from "./PostComp";
 import Link from "next/link";
 
+interface LikeItem {
+    userId: string;
+    postId: number;
+    user: User;
+}
+
 interface PostType extends Post {
     author: User;
-    likes: Like[];
+    likes: LikeItem[];
 }
 
 export default function Feed() {

@@ -2,9 +2,15 @@ import PostComp from "@/components/PostComp";
 import { prisma } from "@/lib/prisma";
 import { Like, Post, User } from "@prisma/client";
 
+interface LikeItem {
+    userId: string;
+    postId: string;
+    user: User;
+}
+
 interface PostType extends Post {
     author: User;
-    likes: Like[];
+    likes: LikeItem[];
 }
 
 async function getPost(postId: number) {
@@ -14,7 +20,11 @@ async function getPost(postId: number) {
         },
         include: {
             author: true,
-            likes: true,
+            likes: {
+                include: {
+                    user: true,
+                },
+            },
         },
     });
 

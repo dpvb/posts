@@ -1,24 +1,31 @@
 "use client";
 
-import { Like } from "@prisma/client";
+import { Like, User } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Tooltip } from "react-tooltip";
 import LikesModal from "./LikesModal";
+import { PictureInPictureSharp } from "@mui/icons-material";
+
+interface LikeItem {
+    userId: string;
+    postId: number;
+    user: User;
+}
 
 export default function PostLike({
     likes,
     postId,
 }: {
-    likes: Like[];
+    likes: LikeItem[];
     postId: number;
 }) {
     const [numLikes, setNumLikes] = useState(likes.length);
     const [liked, setLiked] = useState(false);
     const { data: session } = useSession();
-    const [showLikesModal, setShowLikesModal] = useState(true);
+    const [showLikesModal, setShowLikesModal] = useState(false);
 
     useEffect(() => {
         setLiked(likes.some((like) => like.userId === session?.user?.id));
@@ -47,7 +54,7 @@ export default function PostLike({
 
     return (
         <div className="flex items-center gap-1">
-            <a id="like-button">
+            <a id={`like-button-${postId}`}>
                 <button
                     onClick={handleLikePress}
                     className={`${
@@ -65,7 +72,7 @@ export default function PostLike({
             <Tooltip
                 delayShow={500}
                 clickable
-                anchorSelect="#like-button"
+                anchorSelect={`#like-button-${postId}`}
                 place="left"
             >
                 <button onClick={() => setShowLikesModal(true)}>

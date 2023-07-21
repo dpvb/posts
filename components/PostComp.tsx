@@ -5,10 +5,16 @@ import PostLike from "./PostLike";
 import Link from "next/link";
 import LinkIcon from "@mui/icons-material/Link";
 
+interface LikeItem {
+    userId: string;
+    postId: number;
+    user: User;
+}
+
 export default function PostComp({
     post,
 }: {
-    post: Post & { author: User; likes: Like[] };
+    post: Post & { author: User; likes: LikeItem[] };
 }) {
     return (
         <div className="mx-auto flex w-11/12 flex-col rounded-md border border-solid border-gray-600 bg-gray-800 p-3 text-white md:w-[540px]">
